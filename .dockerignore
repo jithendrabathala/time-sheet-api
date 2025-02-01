@@ -1,0 +1,35 @@
+# editor config
+.vscode
+!.vscode/extensions.json
+.idea
+.DS_Store
+
+# dependencies
+node_modules
+
+# build output
+dist
+
+# logs
+logs
+*.logs
+
+# lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# misc
+.cache
+
+# git
+.git
+.gitignore
+,gittattributes
+.github
+
+# config files
+.husky
+.prettierignore
+.prettierrc
+eslint.config.mjs
