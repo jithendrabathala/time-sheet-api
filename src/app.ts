@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import { createServer, Server } from 'http';
@@ -11,6 +12,7 @@ const httpServer: Server = createServer(app);
 
 app.use(express.json());
 app.use(cors({ credentials: true }));
+app.use(cookieParser());
 
 app.use('/api', rootRouter);
 

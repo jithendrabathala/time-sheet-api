@@ -5,7 +5,9 @@ import logger from '../logger/winston';
 // function to connect to MongoDB
 const connectDB = async (): Promise<void> => {
   try {
-    const connectionInstance: typeof mongoose = await mongoose.connect(`${MONGO_URI}/${MONGO_DB_NAME}`);
+    const connectionInstance: typeof mongoose = await mongoose.connect(
+      `${MONGO_URI}/${MONGO_DB_NAME}`,
+    );
 
     logger.info({
       message: `\nConnected to MongoDB: ${connectionInstance.connection.host}\n`,

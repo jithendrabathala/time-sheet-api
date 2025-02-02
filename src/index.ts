@@ -1,6 +1,7 @@
 import httpServer from './app';
 
 import { PORT } from './config/env';
+import connectDB from './db';
 import logger from './logger/winston';
 
 // function to start the http server
@@ -16,7 +17,8 @@ const startServer = (): void => {
 // function to start the app
 const startApp = async (): Promise<void> => {
   try {
-    await startServer();
+    await connectDB();
+    startServer();
   } catch (error: unknown) {
     logger.error({
       message: `Error starting server: ${error}`,

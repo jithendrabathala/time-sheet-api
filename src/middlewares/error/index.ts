@@ -2,7 +2,12 @@ import { Request, Response, ErrorRequestHandler, NextFunction } from 'express';
 import { HttpException } from '../../exceptions';
 import logger from '../../logger/winston';
 
-const ErrorHandler: ErrorRequestHandler = (error: HttpException, _req: Request, res: Response, _next: NextFunction) => {
+const ErrorHandler: ErrorRequestHandler = (
+  error: HttpException,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
   void _next;
 
   if (error.error) {
