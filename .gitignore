@@ -13,6 +13,7 @@ dist
 # logs
 logs
 *.logs
+*.log
 
 # lock files
 package-lock.json

@@ -48,8 +48,8 @@ const format: winston.Logform.Format = winston.format.combine(
 
 const transports: winston.transport[] = [
   new winston.transports.Console(),
-  new winston.transports.File({ filename: 'error.log', level: 'error' }),
-  new winston.transports.File({ filename: 'combined.log' }),
+  new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+  new winston.transports.File({ filename: 'logs/combined.log' }),
 ];
 
 const logger = winston.createLogger({ level, levels, format, transports });
