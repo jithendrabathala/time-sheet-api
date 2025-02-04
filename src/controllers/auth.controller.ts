@@ -5,7 +5,6 @@ import { TLoginCredentials, TLoginReponse } from '../types';
 import { NODE_ENV } from '../config/env';
 
 // register controller
-// FIXME: validate user input
 export const register: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
   const { email, username, password, profile } = req.body;
 
@@ -18,7 +17,6 @@ export const register: RequestHandler = asyncHandler(async (req: Request, res: R
 });
 
 // login controller
-// FIXME: validate login credentials
 export const login: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
   const { usernameOrEmail, password }: TLoginCredentials = req.body;
 
