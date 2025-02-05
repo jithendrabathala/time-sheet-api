@@ -3,13 +3,13 @@ import { login, logout, refreshToken, register } from '../controllers/auth.contr
 import { validateBody } from '../middlewares/validate';
 import { SignInSchema, SignUpSchema } from '../validations';
 
-const authRouter: Router = Router();
+const router: Router = Router();
 
-authRouter.post('/register', validateBody(SignUpSchema), register);
-authRouter.post('/login', validateBody(SignInSchema), login);
+router.post('/register', validateBody(SignUpSchema), register);
+router.post('/login', validateBody(SignInSchema), login);
 
-authRouter.get('/logout', logout);
+router.get('/logout', logout);
 
-authRouter.get('/refresh-token', refreshToken);
+router.get('/refresh-token', refreshToken);
 
-export default authRouter;
+export default router;
