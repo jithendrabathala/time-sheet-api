@@ -9,6 +9,32 @@ import {
   REFRESH_TOKEN_EXPIRY_VALUE,
   REFRESH_TOKEN_EXPIRY_UNIT,
 } from '../../config/env';
+import { UnauthorizedException } from '../../exceptions';
+
+const generateToken = async (
+  jwtPayload: IJwtPlayload,
+  sceret: string,
+  expiresInOptions: { value: number; unit: UnitAnyCase },
+): Promise<string> => {
+  const { value, unit } = expiresInOptions;
+
+  const expiresIn: StringValue = `${value}${unit}`;
+
+  return await jwt.sign({ id: jwtPayload.id } as IJwtPlayload, sceret, {
+    expiresIn,
+  } as jwt.SignOptions);
+};
+
+const verifyToken = (token: string, secret: string): IJwtPlayload | null => {
+  try {
+    return jwt.verify(token, secret) as IJwtPlayload | null;
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    throw error;
+  }
+};
 
 export const generateAccessToken = async (jwtPayload: IJwtPlayload): Promise<string> => {
   return await generateToken(jwtPayload, ACCESS_TOKEN_SECRET, {
@@ -24,16 +50,10 @@ export const generateRefreshToken = async (jwtPayload: IJwtPlayload): Promise<st
   });
 };
 
-export const generateToken = async (
-  jwtPayload: IJwtPlayload,
-  sceret: string,
-  expiresInOptions: { value: number; unit: UnitAnyCase },
-): Promise<string> => {
-  const { value, unit } = expiresInOptions;
+export const verifyAccessToken = (token: string): IJwtPlayload | null => {
+  return verifyToken(token, ACCESS_TOKEN_SECRET);
+};
 
-  const expiresIn: StringValue = `${value}${unit}`;
-
-  return await jwt.sign({ id: jwtPayload.id } as IJwtPlayload, sceret, {
-    expiresIn,
-  } as jwt.SignOptions);
+export const verifyRefreshToken = (token: string): IJwtPlayload | null => {
+  return verifyToken(token, REFRESH_TOKEN_SECRET);
 };

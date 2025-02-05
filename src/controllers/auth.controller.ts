@@ -1,6 +1,6 @@
 import { Request, RequestHandler, Response } from 'express';
 import asyncHandler from '../utils/async-handler';
-import { createUser, loginUser } from '../services/auth';
+import { createUser, loginUser, refreshTokenService } from '../services/auth';
 import { TLoginCredentials, TLoginReponse } from '../types';
 import { NODE_ENV } from '../config/env';
 
@@ -33,9 +33,12 @@ export const login: RequestHandler = asyncHandler(async (req: Request, res: Resp
 });
 
 // refresh token controller
-// TODO: implement refresh token logic
 export const refreshToken: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
-  res.status(200).json({ message: 'Token refreshed successfully' });
+  const userRefreshToken: string | null = req.cookies.refreshToken;
+
+  const response = await refreshTokenService(userRefreshToken);
+
+  res.status(200).json({ token: response.accessToken, message: response.message });
 });
 
 // logout controller
