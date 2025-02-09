@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  title: 'Time Sheet API Documentation'
+  version: '1.0.0'
+  description: 'API documentation for the Time Sheet application'
+  contact: {}
+
+servers:
+  - url: 'http://localhost:8080'
+    description: 'Local server'
+
+paths:
+  /api:
+    get:
+      tags:
+        - 'Welcome'
+      summary: 'Welcome message'
+      description: 'Welcome message for the API'
+      responses:
+        '200':
+          description: 'Welcome message'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Welcome to Time Sheet API'
+
+  /api/auth/login:
+    post:
+      tags:
+        - 'Authentication'
+      summary: 'Login'
+      description: 'Login to the application'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: 'object'
+              properties:
+                usernameOrEmail:
+                  type: 'string'
+                  example: 'jithendra369'
+                password:
+                  type: 'string'
+                  example: 'pass,123'
+      responses:
+        '200':
+          description: 'Login successful'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Login successful'
+                  token:
+                    type: 'string'
+                    example: '<JWT token>'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'User not found'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Invalid password'
+  /api/auth/register:
+    post:
+      tags:
+        - 'Authentication'
+      summary: 'Register'
+      description: 'Register to the application'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: 'object'
+              properties:
+                username:
+                  type: 'string'
+                  example: 'jithendra'
+                email:
+                  type: 'string'
+                  example: 'jithendrabathala@gmail.com'
+                password:
+                  type: 'string'
+                  example: 'pass,123'
+                profile:
+                  type: 'string'
+                  example: 'https://www.google.com'
+      responses:
+        '201':
+          description: 'Register successful'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'User created successfully'
+                  success:
+                    type: 'boolean'
+                    example: 'true'
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'User already exists'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Invalid email'
+  /api/auth/logout:
+    post:
+      tags:
+        - 'Authentication'
+      summary: 'Logout'
+      description: 'Logout from the application'
+      responses:
+        '200':
+          description: 'Logout successful'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Logout successfully'
+  /api/auth/refresh-token:
+    get:
+      tags:
+        - 'Authentication'
+      summary: 'Refresh token'
+      description: 'Refresh the token'
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: 'Refresh token (Bearer YOUR_TOKEN)'
+      responses:
+        '200':
+          description: 'Token refreshed'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                properties:
+                  message:
+                    type: 'string'
+                    example: 'Token refreshed'
+                  token:
+                    type: 'string'
+                    example: '<JWT token>'
