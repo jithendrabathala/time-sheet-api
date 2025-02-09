@@ -6,3 +6,12 @@ export const createTaskService = async (task: TTaskInput): Promise<ITask> => {
 
   return newTask;
 };
+
+export const getMyTasksService = async (
+  userId: string,
+  filters: Record<string, unknown>,
+): Promise<ITask[]> => {
+  const tasks: ITask[] = await TaskModel.find({ assignee: userId, ...filters });
+
+  return tasks;
+};

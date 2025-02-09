@@ -16,6 +16,6 @@ router.get(
 router.use('/auth', authRouter);
 
 router.use(verifyToken);
-router.use('/task', taskRouter);
+router.use('/tasks', taskRouter);
 
 export default router;

@@ -1,7 +1,8 @@
 import { CustomRequest, ITask, TTaskInput } from './../types';
 import { RequestHandler, Response, Request } from 'express';
 import asyncHandler from '../utils/async-handler';
-import { createTaskService } from '../services/tasks';
+import { createTaskService, getMyTasksService } from '../services/tasks';
+import { NotFoundException } from '../exceptions';
 
 export const createTask: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
   const {
@@ -28,4 +29,16 @@ export const createTask: RequestHandler = asyncHandler(async (req: Request, res:
   });
 
   res.status(201).json({ task: newTask, message: 'Task created successful' });
+});
+
+export const getMyTasks: RequestHandler = asyncHandler(async (req: Request, res: Response) => {
+  const filters = req.query;
+
+  const tasks: ITask[] = await getMyTasksService((req as CustomRequest).user.id, filters);
+
+  if (!tasks.length) {
+    throw new NotFoundException('No tasks found');
+  }
+
+  res.status(200).json({ tasks, length: tasks.length });
 });
