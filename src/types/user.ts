@@ -5,6 +5,7 @@ export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
+  isAdmin?: boolean;
   profile?: string;
   comparePassword(password: string): () => Promise<boolean>;
   generateAccessToken(): Promise<string>;

@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { ITask } from '../types/task';
+import { ITask } from '../types';
 
 const TaskSchema: Schema<ITask> = new Schema(
   {
