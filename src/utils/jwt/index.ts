@@ -10,6 +10,7 @@ import {
   REFRESH_TOKEN_EXPIRY_UNIT,
 } from '../../config/env';
 import { UnauthorizedException } from '../../exceptions';
+import logger from '../../logger/winston';
 
 const generateToken = async (
   jwtPayload: IJwtPlayload,
@@ -37,6 +38,8 @@ const verifyToken = (token: string, secret: string): IJwtPlayload | null => {
 };
 
 export const generateAccessToken = async (jwtPayload: IJwtPlayload): Promise<string> => {
+  // printing the current time in hr:min:sec format
+  logger.debug('access token created at ' + new Date().toLocaleTimeString());
   return await generateToken(jwtPayload, ACCESS_TOKEN_SECRET, {
     value: ACCESS_TOKEN_EXPIRY_VALUE,
     unit: ACCESS_TOKEN_EXPIRY_UNIT,
@@ -44,6 +47,7 @@ export const generateAccessToken = async (jwtPayload: IJwtPlayload): Promise<str
 };
 
 export const generateRefreshToken = async (jwtPayload: IJwtPlayload): Promise<string> => {
+  logger.debug('refresh token created at ' + new Date().toLocaleTimeString());
   return await generateToken(jwtPayload, REFRESH_TOKEN_SECRET, {
     value: REFRESH_TOKEN_EXPIRY_VALUE,
     unit: REFRESH_TOKEN_EXPIRY_UNIT,
