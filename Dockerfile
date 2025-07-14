@@ -9,7 +9,7 @@ RUN npm run build
 FROM node:22-alpine as runtime
 COPY --from=production /dist ./dist
 COPY --from=production package*.json ./
-RUN npm install --omit=dev
+RUN npm install
 
 EXPOSE 8000
 
