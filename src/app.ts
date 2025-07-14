@@ -18,14 +18,7 @@ const app: Express = express();
 const httpServer: Server = createServer(app);
 
 app.use(express.json());
-app.use(
-  cors({
-    credentials: true,
-    // preflightContinue: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
-    origin: 'http://localhost:3000',
-  }),
-);
+app.use(cors({ credentials: true }));
 app.use(cookieParser());
 
 app.use('/api', rootRouter);
